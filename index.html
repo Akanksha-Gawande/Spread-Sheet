@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <button id="bold">bold</button>
+      <button id="italic">italic</button>
+
+      <input type="color" id="color" value="#000000" />
+      <input type="color" id="background-color" value="#ffffff" />
+    </div>
+
+    <div id="spreadSheet-Container"></div>
+
+    <script>
+      const continer = document.getElementById("spreadSheet-Container");
+
+      const columnHeaderRow = document.createElement("div");
+      for (let col = 0; col <= 50; col++) {
+        const cell = document.createElement("div");
+        cell.className = "cell";
+        cell.classList.add("header-cell");
+        cell.innerHTML = col;
+        columnHeaderRow.append(cell);
+      }
+      continer.append(columnHeaderRow);
+
+      for (let row = 1; row <= 26; row++) {
+        let rowElement = document.createElement("div");
+
+        let rowHeader = document.createElement("div");
+        rowHeader.className = "cell";
+        rowHeader.classList.add("header-cell");
+        rowHeader.innerHTML = String.fromCharCode(64 + row);
+        rowElement.append(rowHeader);
+
+        for (let col = 1; col <= 50; col++) {
+          let cell = document.createElement("div");
+          cell.className = "cell";
+          cell.contentEditable = true;
+          rowElement.append(cell);
+          cell.addEventListener("click", handleCellClick);
+        }
+        continer.append(rowElement);
+      }
+
+      let selectedCells = new Set();
+
+      function handleCellClick(event) {
+        console.log(event);
+        let targetCell = event.target;
+
+        if (!event.ctrlKey && !event.metaKey) {
+          targetCell.forEach((cell) => cell.classList.remove("selected-cell"));
+          selectedCells.clear();
+        } else if (selectedCells.has(targetCell)) {
+          selectedCells.delete(targetCell);
+          targetCell.classList.remove("selected-cell");
+        } else {
+          targetCell.classList.add("selected-cell");
+          selectedCells.add(targetCell);
+        }
+      }
+
+      const boldButton = document.getElementById("bold");
+
+      boldButton.addEventListener("click", () => {
+        selectedCells.forEach((cell) => {
+          cell.style.fontweight =
+            cell.style.fontweight === "bold" ? "normal" : "bold";
+        });
+      });
+
+      const textColorInp = document.getElementById('color')
+
+      colorButtonInp.addEventListener('change', () =>{
+        let color = textColorInp.value;
+        selectedCells.forEach(cell => {
+            cell.style.color = color;
+        })
+      })
+    </script>
+  </body>
+</html>

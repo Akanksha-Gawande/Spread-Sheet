@@ -1,0 +1,26 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+#spreadSheet-Container {
+    display: grid;
+    grid-template-columns:60px repeat(26,100px);
+    grid-template-rows:60px repeat(50,50px);
+}
+.cell {
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+.header-cell {
+    background-color: #f1f1f1;
+    font-weight: bold;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+
+}
+.selected-cell {
+    background-color: red;
+}
